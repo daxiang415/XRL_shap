@@ -118,11 +118,11 @@ class Takasago_ENV(gym.Env):
 
     # 电池动作
     if (action[-1] * self.battery_change) / 6.4 + self.battery_state < 0:
-      action[-1] = - self.battery_state  # 改变动作，只能放这么多电
+      action[-1] = - self.battery_state * 6.4 / self.battery_change  # 改变动作，只能放这么多电
       self.battery_state = 0
 
     elif (action[-1] * self.battery_change) / 6.4 + self.battery_state > 1:
-      action[-1] = 1 - self.battery_state
+      action[-1] = (1 - self.battery_state) * 6.4 / self.battery_change
       self.battery_state = 1
 
     else:
